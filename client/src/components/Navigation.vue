@@ -12,7 +12,7 @@ import { RouterLink } from 'vue-router'
                 <RouterLink to="/speed-records">Speed records</RouterLink>
             </li>
             <li style="float:right">
-                <RouterLink to="/login">Connexion</RouterLink>
+                <RouterLink to="/login">Login</RouterLink>
             </li>
         </ul>
     </nav>

@@ -9,7 +9,8 @@ const generate = (): string[] => {
   ]
 }
 
-let time: Ref<number> = ref(60)
+let timer: number
+const seconds: Ref<number> = ref(60)
 const words: Ref<string[]> = ref(generate())
 const score: Ref<number> = ref(0)
 
@@ -29,12 +30,6 @@ const check = (e: any): void => {
   } else {
     errorField(e)
   }
-}
-
-const startTimer = () => {
-  setInterval(() => {
-    time.value--
-  }, 1000)
 }
 
 const removeWord = (): void => {
@@ -60,6 +55,19 @@ const clear = (e: any): void => {
     e.target.value = ''
   }
 }
+
+const startTimer = () => {
+  timer = setInterval(updateTimer, 1000)
+}
+
+const updateTimer = () => {
+
+  if (seconds.value <= 0) {
+    clearInterval(timer);
+  } else {
+    seconds.value--
+  }
+}
 </script>
 
 <template>
@@ -69,10 +77,10 @@ const clear = (e: any): void => {
       <span class="word" v-for="word in words">{{ word }}</span>
     </div>
 
-    <input type="text" @keypress="startTimer" @keydown="check" @keyup="clear" />
+    <input type="text" @keydown="check" @keyup="clear" @click="startTimer" />
 
     <div class="infos">
-      <div>Time : {{ time }}</div>
+      <div>{{ seconds }} s</div>
       <div>Score : {{ score }}</div>
     </div>
   </div>
@@ -84,7 +92,7 @@ p {
 }
 
 .typing {
-  margin: 10em auto;
+  margin: 5em auto;
   width: 50%;
   padding: 10px;
 }
@@ -107,7 +115,7 @@ p {
 
 input {
   width: 100%;
-  padding: 1em 0.5em;
+  padding: 0.5em;
   margin: 8px 0;
   font-size: 2em;
   border-radius: 10px;
@@ -118,6 +126,5 @@ input {
 .infos {
   font-size: 1.5em;
   text-align: center;
-  justify-content: space-between;
 }
 </style>
