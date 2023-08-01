@@ -72,7 +72,7 @@ const updateTimer = () => {
   <div class="typing">
 
     <div class="words">
-      <span class="word" v-for="word in words">{{ word }}</span>
+      <span class="word" v-if="seconds > 0" v-for="word in words">{{ word }}</span>
     </div>
 
     <input type="text" @focus="startTimer" @keydown.space="check" @keyup.space="clear" />
@@ -80,6 +80,8 @@ const updateTimer = () => {
     <div class="infos">
       <div>{{ seconds }} s</div>
       <div>Score : {{ score }}</div>
+
+      <button v-if="seconds === 0">Enregistrer</button>
     </div>
   </div>
 </template>
@@ -87,6 +89,15 @@ const updateTimer = () => {
 <style scoped>
 p {
   font-size: 1.5em;
+}
+
+button {
+  font-size: 1em;
+  margin-top: 0.5em;
+  padding: 0.5em;
+  background-color: #05be4c;
+  color: #FFF;
+  border-radius: 10px;
 }
 
 .typing {
