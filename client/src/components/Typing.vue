@@ -9,19 +9,14 @@ const generate = (): string[] => {
   ]
 }
 
-let timer: number
-const seconds: Ref<number> = ref(60)
+let timer: any
+let seconds: Ref<number> = ref(60)
 const words: Ref<string[]> = ref(generate())
 const score: Ref<number> = ref(0)
 
 const check = (e: any): void => {
 
-  const keyCode = e.keyCode
   const word = e.target.value.trim()
-
-  if (![32, 13].includes(keyCode)) {
-    return
-  }
 
   if (word === words.value[0]) {
     removeWord()
@@ -57,7 +52,10 @@ const clear = (e: any): void => {
 }
 
 const startTimer = () => {
-  timer = setInterval(updateTimer, 1000)
+
+  if (seconds.value === 60) {
+    timer = setInterval(updateTimer, 1000)
+  }
 }
 
 const updateTimer = () => {
@@ -77,7 +75,7 @@ const updateTimer = () => {
       <span class="word" v-for="word in words">{{ word }}</span>
     </div>
 
-    <input type="text" @keydown="check" @keyup="clear" @click="startTimer" />
+    <input type="text" @focus="startTimer" @keydown.space="check" @keyup.space="clear" />
 
     <div class="infos">
       <div>{{ seconds }} s</div>
