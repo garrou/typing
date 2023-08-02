@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Footer from '../components/Footer.vue'
+import RegisterForm from '../components/RegisterForm.vue'
 import Navigation from '../components/Navigation.vue'
 </script>
 
@@ -8,7 +9,7 @@ import Navigation from '../components/Navigation.vue'
         <Navigation />
     </header>
     <main>
-
+        <RegisterForm />
     </main>
     <footer>
         <Footer />

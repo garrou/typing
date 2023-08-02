@@ -16,14 +16,14 @@ import Typing from '../components/Typing.vue'
   </footer>
 </template>
 
-<style scoped>
+<style>
 footer {
-    position: fixed;
-    bottom: 0;
-    margin: 0 12.5%;
-    width: 75%;
-    background-color: #000;
-    color: #FFF;
-    text-align: center;
+  position: fixed;
+  bottom: 0;
+  margin: 0 12.5%;
+  width: 75%;
+  background-color: #000;
+  color: #FFF;
+  text-align: center;
 }
 </style>
