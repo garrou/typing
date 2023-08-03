@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
-import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import SpeedRecordsView from '../views/SpeedRecordsView.vue'
+import TypingView from '../views/TypingView.vue'
 
-const isLoggedIn = async () => {
+const isLoggedIn = async (): Promise<boolean> => {
   const res = await fetch("http://localhost:8080/api/user", {
     headers: {
       "Content-Type": "application/json",
@@ -21,8 +21,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'typing',
+      component: TypingView
     },
     {
       path: '/speed-records',

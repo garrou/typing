@@ -12,14 +12,14 @@ func AuthorizeJwt() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 
-		if authHeader == "" {
-			c.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("No token", nil))
+		if !strings.Contains(authHeader, "Bearer ") {
+			c.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("User not authenticated", nil))
 			return
 		}
 		items := strings.Split(authHeader, " ")
 
 		if len(items) != 2 {
-			c.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("No token", nil))
+			c.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("User not authenticated", nil))
 			return
 		}
 		token, err := utils.ValidateToken(items[1])
@@ -27,6 +27,6 @@ func AuthorizeJwt() gin.HandlerFunc {
 		if !token.Valid || err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, utils.NewResponse("Invalid token", nil))
 		}
-		c.Set("token", utils.ExtractUserId(token))
+		c.Set("userId", utils.ExtractUserId(token))
 	}
 }

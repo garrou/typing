@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import router from '@/router';
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
@@ -9,10 +10,11 @@ const generate = (): string[] => {
   ]
 }
 
-let timer: any
-let seconds: Ref<number> = ref(60)
+let timer: number
+const seconds: Ref<number> = ref(60)
 const words: Ref<string[]> = ref(generate())
 const score: Ref<number> = ref(0)
+const error: Ref<string> = ref('')
 
 const check = (e: any): void => {
 
@@ -51,14 +53,14 @@ const clear = (e: any): void => {
   }
 }
 
-const startTimer = () => {
+const startTimer = (): void => {
 
   if (seconds.value === 60) {
     timer = setInterval(updateTimer, 1000)
   }
 }
 
-const updateTimer = () => {
+const updateTimer = (): void => {
 
   if (seconds.value <= 0) {
     clearInterval(timer);
@@ -66,22 +68,44 @@ const updateTimer = () => {
     seconds.value--
   }
 }
+
+const saveScore = async (): Promise<void>  => {
+  const res = await fetch("http://localhost:8080/api/scores", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+    },
+    body: JSON.stringify({
+      score: score.value,
+    }),
+  })
+
+  if (res.status === 201) {
+    router.push('/dashboard')
+  } else {
+    const { message } = await res.json()
+    error.value = message
+  }
+}
 </script>
 
 <template>
   <div class="typing">
 
-    <div class="words">
-      <span class="word" v-if="seconds > 0" v-for="word in words">{{ word }}</span>
+    <div class="words" v-if="seconds > 0">
+      <span class="word" v-for="word in words">{{ word }}</span>
     </div>
 
-    <input type="text" @focus="startTimer" @keydown.space="check" @keyup.space="clear" />
+    <input type="text" @focus="startTimer" @keydown.space="check" @keyup.space="clear" v-if="seconds > 0" />
 
     <div class="infos">
       <div>{{ seconds }} s</div>
       <div>Score : {{ score }}</div>
 
-      <button v-if="seconds === 0">Enregistrer</button>
+      <button @click="saveScore" v-if="seconds === 0">Enregistrer</button>
+
+      <p class="error" v-if="error">{{ error }}</p>
     </div>
   </div>
 </template>

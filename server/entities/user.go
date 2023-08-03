@@ -9,5 +9,5 @@ type User struct {
 	Username string    `gorm:"type:varchar(50);not null;"`
 	Password string    `gorm:"not null;type:varchar(255);not null"`
 	JoinedAt time.Time `gorm:"not null;"`
-	// Series   []Series
+	Records  []Score
 }

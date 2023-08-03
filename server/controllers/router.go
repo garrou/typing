@@ -23,6 +23,9 @@ func InitRouter() *gin.Engine {
 	api.Use(middlewares.AuthorizeJwt())
 	{
 		api.GET("/user", GetAuthUser)
+
+		api.GET("/scores", GetScores)
+		api.POST("/scores", PostScore)
 	}
 	return router
 }

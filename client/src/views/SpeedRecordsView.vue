@@ -8,7 +8,7 @@ import Navigation from '../components/Navigation.vue'
         <Navigation />
     </header>
     <main>
-
+        <h1>SPEED RECORDS</h1>
     </main>
     <footer>
         <Footer />

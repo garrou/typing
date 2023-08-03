@@ -5,11 +5,17 @@ export default {
             username: '',
             password: '',
             confirm: '',
+            error: ''
         }
     },
     methods: {
-        async register(e: any) {
+        async register(e: any): Promise<void>  {
             e.preventDefault()
+
+            if (this.password !== this.confirm) {
+                this.error = 'Password and confirmation are different'
+                return
+            }
 
             const res = await fetch("http://localhost:8080/api/register", {
                 method: "POST",
@@ -23,11 +29,11 @@ export default {
                 }),
             })
 
-
             if (res.status === 201) {
-
+                this.$router.push('/login')
             } else {
-
+                const { message } = await res.json()
+                this.error = message
             }
         }
     }
@@ -52,5 +58,7 @@ export default {
         <div class="field">
             <RouterLink to="/login">Sign in</RouterLink>
         </div>
+
+        <p class="error" v-if="error">{{ error }}</p>
     </form>
 </template>

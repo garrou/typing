@@ -15,7 +15,7 @@ func Login(ctx *gin.Context) {
 	var userDto dto.UserLoginDto
 
 	if errDto := ctx.ShouldBind(&userDto); errDto != nil {
-		ctx.AbortWithStatus(http.StatusBadRequest)
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("Invalid form", nil))
 		return
 	}
 	res := services.Login(userDto.Username, userDto.Password)
@@ -33,13 +33,13 @@ func Register(ctx *gin.Context) {
 	var userDto dto.UserCreateDto
 
 	if errDto := ctx.ShouldBind(&userDto); errDto != nil {
-		ctx.AbortWithStatus(http.StatusBadRequest)
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("Invalid form", nil))
 		return
 	}
 	userDto.TrimSpace()
 
 	if !userDto.IsValid() {
-		ctx.AbortWithStatus(http.StatusBadRequest)
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("Invalid username or password", nil))
 		return
 	}
 	if services.IsDuplicateUsername(userDto.Username) {
@@ -52,7 +52,7 @@ func Register(ctx *gin.Context) {
 
 func GetAuthUser(ctx *gin.Context) {
 
-	userId := ctx.GetString("token")
+	userId := ctx.GetString("userId")
 	res := services.FindUserById(userId)
 
 	if user, ok := res.(entities.User); ok {

@@ -15,15 +15,3 @@ import Typing from '../components/Typing.vue'
     <Footer />
   </footer>
 </template>
-
-<style>
-footer {
-  position: fixed;
-  bottom: 0;
-  margin: 0 12.5%;
-  width: 75%;
-  background-color: #000;
-  color: #FFF;
-  text-align: center;
-}
-</style>
