@@ -24,7 +24,6 @@ func Open() {
 	if errDb != nil {
 		panic(errDb.Error())
 	}
-
 	if errMigrate := db.AutoMigrate(&entities.User{}, &entities.Score{}); errMigrate != nil {
 		panic(errMigrate)
 	}

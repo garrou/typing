@@ -19,7 +19,7 @@ const getScores = async (): Promise<void> => {
     const res = await fetch("http://localhost:8080/api/scores", {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+            "Authorization": `Bearer ${localStorage.getItem('jwt') ?? ''}`
         }
     })
 
@@ -45,9 +45,14 @@ const getScores = async (): Promise<void> => {
 </template>
 
 <style scoped>
+
+table {
+    width: 100%;
+}
+
 .scores {
     text-align: center;
-    margin: auto;
+    margin: auto 25%;
     padding: 10px;
 }
 

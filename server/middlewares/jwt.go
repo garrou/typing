@@ -8,24 +8,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const BEARER = "Bearer "
+
 func AuthorizeJwt() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 
-		if !strings.Contains(authHeader, "Bearer ") {
+		if !strings.Contains(authHeader, BEARER) {
 			c.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("User not authenticated", nil))
 			return
 		}
-		items := strings.Split(authHeader, " ")
-
-		if len(items) != 2 {
-			c.AbortWithStatusJSON(http.StatusBadRequest, utils.NewResponse("User not authenticated", nil))
-			return
-		}
-		token, err := utils.ValidateToken(items[1])
+		bearer := authHeader[len(BEARER):]
+		token, err := utils.ValidateToken(bearer)
 
 		if !token.Valid || err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, utils.NewResponse("Invalid token", nil))
+			return
 		}
 		c.Set("userId", utils.ExtractUserId(token))
 	}

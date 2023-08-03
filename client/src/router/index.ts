@@ -9,7 +9,7 @@ const isLoggedIn = async (): Promise<boolean> => {
   const res = await fetch("http://localhost:8080/api/user", {
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+      "Authorization": `Bearer ${localStorage.getItem('jwt') ?? ''}`
     }
   })
 
