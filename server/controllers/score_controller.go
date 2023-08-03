@@ -26,3 +26,8 @@ func GetScores(ctx *gin.Context) {
 	scores := services.GetScores(ctx.GetString("userId"))
 	ctx.JSON(http.StatusOK, scores)
 }
+
+func GetBestScores(ctx *gin.Context) {
+	bestScores := services.GetBestScores()
+	ctx.JSON(http.StatusOK, bestScores)
+}

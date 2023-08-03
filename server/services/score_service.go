@@ -33,3 +33,7 @@ func GetScores(userId string) []dto.ScoreDto {
 	}
 	return scores
 }
+
+func GetBestScores() []dto.BestScoreDto {
+	return repositories.FindBestScores()
+}

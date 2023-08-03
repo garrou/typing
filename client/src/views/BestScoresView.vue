@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Footer from '../components/Footer.vue'
 import Navigation from '../components/Navigation.vue'
+import BestScores from '../components/BestScores.vue'
 </script>
 
 <template>
@@ -8,7 +9,7 @@ import Navigation from '../components/Navigation.vue'
         <Navigation />
     </header>
     <main>
-        <h1>SPEED RECORDS</h1>
+        <BestScores />
     </main>
     <footer>
         <Footer />

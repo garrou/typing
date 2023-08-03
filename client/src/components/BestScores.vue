@@ -2,24 +2,23 @@
 import { onMounted, ref } from 'vue'
 import type { Ref } from 'vue'
 
-interface Score {
+interface BestScore {
+
+    username: string
 
     score: number
-
-    createdAt: Date
 }
 
-const scores: Ref<Score[]> = ref([])
+const scores: Ref<BestScore[]> = ref([])
 
 onMounted(() => {
-    getScores()
+    getBestScores()
 })
 
-const getScores = async (): Promise<void> => {
-    const res = await fetch("http://localhost:8080/api/scores", {
+const getBestScores = async (): Promise<void> => {
+    const res = await fetch("http://localhost:8080/api/best-scores", {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem('jwt') ?? ''}`
         }
     })
 
@@ -31,15 +30,15 @@ const getScores = async (): Promise<void> => {
 
 <template>
     <div class="scores">
-        <h1>Your scores</h1>
+        <h1>Best scores</h1>
 
         <table>
             <tr>
-                <td>Date</td>
+                <td>Username</td>
                 <td>Score</td>
             </tr>
             <tr v-for="score in scores">
-                <td>{{ new Date(score.createdAt).toLocaleString() }}</td>
+                <td>{{ score.username }}</td>
                 <td>{{ score.score }}</td>
             </tr>
         </table>

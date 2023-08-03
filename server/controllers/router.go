@@ -20,6 +20,8 @@ func InitRouter() *gin.Engine {
 	api.POST("/register", Register)
 	api.POST("/login", Login)
 
+	api.GET("/best-scores", GetBestScores)
+
 	api.Use(middlewares.AuthorizeJwt())
 	{
 		api.GET("/user", GetAuthUser)

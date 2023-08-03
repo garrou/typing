@@ -27,4 +27,8 @@ li a, span {
     padding: 14px 16px;
     text-decoration: none;
 }
+
+li a:hover {
+    background-color: #05be4c;
+}
 </style>
