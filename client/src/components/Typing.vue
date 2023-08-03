@@ -1,14 +1,10 @@
 <script setup lang="ts">
+import { faker } from '@faker-js/faker';
 import router from '@/router';
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
-const generate = (): string[] => {
-  return [
-    'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix',
-    'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix'
-  ]
-}
+const generate = (): string[] => faker.word.words(250).split(' ')
 
 let timer: number
 const seconds: Ref<number> = ref(60)
@@ -133,7 +129,8 @@ button {
 .words {
   padding: 1em;
   border: 3px solid;
-  overflow-x: hidden;
+  overflow: hidden;
+  white-space: nowrap;
   border-radius: 10px;
 }
 

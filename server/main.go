@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"typing/controllers"
 	"typing/database"
@@ -23,5 +24,10 @@ func main() {
 	gin.SetMode(os.Getenv("GIN_MODE"))
 	router := controllers.InitRouter()
 
-	router.Run(fmt.Sprintf(":%s", os.Getenv("PORT")))
+	if err := router.SetTrustedProxies(nil); err != nil {
+		panic(err.Error())
+	}
+	if err := router.Run(fmt.Sprintf(":%s", os.Getenv("PORT"))); err != nil {
+		log.Fatal(err)
+	}
 }

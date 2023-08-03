@@ -23,7 +23,7 @@ func SaveScore(score dto.ScoreCreateDto) dto.ScoreDto {
 
 func GetScores(userId string) []dto.ScoreDto {
 	res := repositories.FindScoreByUserId(userId)
-	scores := []dto.ScoreDto{}
+	var scores []dto.ScoreDto
 
 	for _, score := range res {
 		scores = append(scores, dto.ScoreDto{
