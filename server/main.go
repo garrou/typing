@@ -13,10 +13,12 @@ import (
 
 func main() {
 
-	errEnv := godotenv.Load()
+	if gin.Mode() != "release" {
+		errEnv := godotenv.Load()
 
-	if errEnv != nil {
-		panic(errEnv.Error())
+		if errEnv != nil {
+			panic(errEnv.Error())
+		}
 	}
 	database.Open()
 	defer database.Close()

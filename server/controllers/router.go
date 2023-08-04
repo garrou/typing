@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"os"
 	"typing/middlewares"
 
 	"github.com/gin-contrib/cors"
@@ -10,7 +11,7 @@ import (
 func InitRouter() *gin.Engine {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:  []string{"http://localhost:5173"},
+		AllowOrigins:  []string{os.Getenv("ORIGIN")},
 		AllowMethods:  []string{"GET", "POST"},
 		AllowHeaders:  []string{"Origin", "Authorization", "Content-Type"},
 		ExposeHeaders: []string{"Content-Length"},
