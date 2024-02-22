@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import router from '@/router';
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import type { Ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const isAuth: Ref<boolean> = ref(false)
 
-onMounted(() => {
+onBeforeMount(() => {
     isLoggedIn()
-})
+});
 
 const isLoggedIn = async (): Promise<void> => {
     const res = await fetch("http://localhost:8080/api/user", {
